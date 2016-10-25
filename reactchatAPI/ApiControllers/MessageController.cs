@@ -36,20 +36,19 @@ namespace reactchatAPI.ApiControllers
         }
 
         // GET api/<controller>/5
-        public List<ChatItem> Get()
+        public Dictionary<string, string> Get()
         {
             return _manager.GetAllChat();
         }
 
         // POST api/<controller>
-        public void PostChat(ChatItem chatItem)
+        public void PostChat(string who, string message)
         {
-            chatItem.Id = Guid.NewGuid();
-            chatItem.DateTime = DateTime.Now;
-            _manager.AddChat(chatItem);
+            who = Guid.NewGuid().ToString();           
+            _manager.AddChat(who, message);
 
             //broadcast the chat to all the clients
-            _chatHub.SendMessage(chatItem);
+            _chatHub.SendMessage(who, message);
         }
 
         // PUT api/<controller>/5

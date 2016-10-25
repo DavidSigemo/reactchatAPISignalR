@@ -8,12 +8,12 @@ namespace ReactChat.Models
 {
     public class ChatStore
     {
-        public List<ChatItem> ChatList { get; set; }
+        public Dictionary<string, string> ChatList { get; set; }
         public List<String> UserList { get; set; }
 
         public ChatStore()
         {
-            ChatList = new List<ChatItem>();
+            ChatList = new Dictionary<string, string>();
             UserList = new List<String>();
         }
     }

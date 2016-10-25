@@ -15,10 +15,10 @@ namespace reactchatAPI.App_Start
         /// Broadcasts the chat message to all the clients
         /// </summary>
         /// <param name="chatItem"></param>
-        public void SendMessage(ChatItem chatItem)
+        public void SendMessage(string who, string message)
         {
             IHubContext context = GlobalHost.ConnectionManager.GetHubContext("MessageHub");
-            context.Clients.All.pushNewMessage(chatItem.Id, chatItem.UserId, chatItem.UserName, chatItem.Message, chatItem.DateTime);
+            context.Clients.All.pushNewMessage(who, message);
         }
 
         /// <summary>
@@ -28,6 +28,12 @@ namespace reactchatAPI.App_Start
         {
             IHubContext context = GlobalHost.ConnectionManager.GetHubContext("MessageHub");
             context.Clients.All.pushUserList(userList);
+        }
+
+        public void Test(string test)
+        {
+            IHubContext context = GlobalHost.ConnectionManager.GetHubContext("MessageHub");
+            context.Clients.All.servertest(test);
         }
     }
 }

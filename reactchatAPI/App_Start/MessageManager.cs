@@ -15,9 +15,9 @@ namespace reactchatAPI.App_Start
             _chatStore = chatStore;
         }
 
-        public void AddChat(ChatItem chatItem)
+        public void AddChat(string who,string message)
         {
-            _chatStore.ChatList.Add(chatItem);
+            _chatStore.ChatList.Add(who, message);
         }
 
         public void AddUser(String userName)
@@ -30,7 +30,7 @@ namespace reactchatAPI.App_Start
             return _chatStore.UserList;
         }
 
-        public List<ChatItem> GetAllChat()
+        public Dictionary<string, string> GetAllChat()
         {
             return _chatStore.ChatList;
         }
