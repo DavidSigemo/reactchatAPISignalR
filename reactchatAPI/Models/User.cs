@@ -26,6 +26,7 @@ namespace reactchatAPI.Models
         public string Password { get; set; }
         public string Email { get; set; }
         public string Salt { get; set; }
+        public string LastConnectionId { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Message> Messages { get; set; }

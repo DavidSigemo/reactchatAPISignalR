@@ -15,7 +15,7 @@ namespace reactchatAPI.ApiControllers
 {
     public class ChatroomController : ApiController
     {
-        private ReactChatConnection db = new ReactChatConnection();
+        private AzureDBConnection db = new AzureDBConnection();
 
         // GET: api/Chatroom
         public IQueryable<Chatroom> GetChatrooms()

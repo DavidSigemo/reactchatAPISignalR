@@ -214,22 +214,15 @@
     <Content Include="Content\Site.css" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
-    <EntityDeploy Include="Models\ReactChatDB.edmx">
-      <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>ReactChatDB.Designer.cs</LastGenOutput>
-    </EntityDeploy>
-    <Content Include="Models\ReactChatDB.edmx.diagram">
-      <DependentUpon>ReactChatDB.edmx</DependentUpon>
-    </Content>
-    <Content Include="Models\ReactChatDB.Context.tt">
+    <Content Include="Models\ReactChatAzureDB.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>ReactChatDB.edmx</DependentUpon>
-      <LastGenOutput>ReactChatDB.Context.cs</LastGenOutput>
+      <DependentUpon>ReactChatAzureDB.edmx</DependentUpon>
+      <LastGenOutput>ReactChatAzureDB.Context.cs</LastGenOutput>
     </Content>
-    <Content Include="Models\ReactChatDB.tt">
+    <Content Include="Models\ReactChatAzureDB.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>ReactChatDB.edmx</DependentUpon>
-      <LastGenOutput>ReactChatDB.cs</LastGenOutput>
+      <DependentUpon>ReactChatAzureDB.edmx</DependentUpon>
+      <LastGenOutput>ReactChatAzureDB.cs</LastGenOutput>
     </Content>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
@@ -239,6 +232,13 @@
     <Content Include="Content\bootstrap.css.map" />
     <Content Include="Content\bootstrap-theme.min.css.map" />
     <Content Include="Content\bootstrap-theme.css.map" />
+    <EntityDeploy Include="Models\ReactChatAzureDB.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>ReactChatAzureDB.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <Content Include="Models\ReactChatAzureDB.edmx.diagram">
+      <DependentUpon>ReactChatAzureDB.edmx</DependentUpon>
+    </Content>
     <None Include="Scripts\jquery-3.1.1.intellisense.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
@@ -273,7 +273,9 @@
     <Content Include="Scripts\react\react-with-addons.min.js" />
     <Content Include="Scripts\react\react.js" />
     <Content Include="Scripts\react\react.min.js" />
-    <Content Include="Web.config" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ApiControllers\ChatroomController.cs" />
@@ -293,32 +295,32 @@
     </Compile>
     <Compile Include="Models\ChatItem.cs" />
     <Compile Include="Models\Chatroom.cs">
-      <DependentUpon>ReactChatDB.tt</DependentUpon>
+      <DependentUpon>ReactChatAzureDB.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Message.cs">
-      <DependentUpon>ReactChatDB.tt</DependentUpon>
+      <DependentUpon>ReactChatAzureDB.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\MessageStore.cs" />
-    <Compile Include="Models\ReactChatDB.Context.cs">
+    <Compile Include="Models\ReactChatAzureDB.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>ReactChatDB.Context.tt</DependentUpon>
+      <DependentUpon>ReactChatAzureDB.Context.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\ReactChatDB.cs">
+    <Compile Include="Models\ReactChatAzureDB.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>ReactChatDB.tt</DependentUpon>
+      <DependentUpon>ReactChatAzureDB.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\ReactChatDB.Designer.cs">
+    <Compile Include="Models\ReactChatAzureDB.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>ReactChatDB.edmx</DependentUpon>
+      <DependentUpon>ReactChatAzureDB.edmx</DependentUpon>
     </Compile>
     <Compile Include="Models\User.cs">
-      <DependentUpon>ReactChatDB.tt</DependentUpon>
+      <DependentUpon>ReactChatAzureDB.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\UserConnection.cs">
-      <DependentUpon>ReactChatDB.tt</DependentUpon>
+      <DependentUpon>ReactChatAzureDB.tt</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />

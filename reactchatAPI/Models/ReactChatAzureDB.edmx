@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="ReactChatModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+      <Schema Namespace="ReactChatAzureModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012.Azure" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="Chatroom">
           <Key>
             <PropertyRef Name="ChatroomId" />
@@ -22,6 +22,7 @@
           <Property Name="AuthorId" Type="int" Nullable="false" />
           <Property Name="ChatroomId" Type="int" Nullable="false" />
           <Property Name="Text" Type="nvarchar" MaxLength="500" Nullable="false" />
+          <Property Name="SendDate" Type="datetime" Nullable="false" />
         </EntityType>
         <EntityType Name="User">
           <Key>
@@ -32,6 +33,7 @@
           <Property Name="Password" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="Email" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="Salt" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="LastConnectionId" Type="nvarchar" MaxLength="50" />
         </EntityType>
         <EntityType Name="UserConnection">
           <Key>
@@ -89,7 +91,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityContainer Name="ReactChatModelStoreContainer">
+        <EntityContainer Name="ReactChatAzureModelStoreContainer">
           <EntitySet Name="Chatroom" EntityType="Self.Chatroom" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Message" EntityType="Self.Message" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="User" EntityType="Self.User" Schema="dbo" store:Type="Tables" />
@@ -115,7 +117,7 @@
     </edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
-      <Schema Namespace="ReactChatModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+      <Schema Namespace="ReactChatAzureModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
         <EntityType Name="Chatroom">
           <Key>
             <PropertyRef Name="ChatroomId" />
@@ -135,6 +137,7 @@
           <Property Name="AuthorId" Type="Int32" Nullable="false" />
           <Property Name="ChatroomId" Type="Int32" Nullable="false" />
           <Property Name="Text" Type="String" MaxLength="500" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="SendDate" Type="DateTime" Nullable="false" Precision="3" />
           <NavigationProperty Name="Chatroom" Relationship="Self.FK_Message_Chatroom" FromRole="Message" ToRole="Chatroom" />
           <NavigationProperty Name="User" Relationship="Self.FK_Message_User" FromRole="Message" ToRole="User" />
         </EntityType>
@@ -147,6 +150,7 @@
           <Property Name="Password" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="Email" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="Salt" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="LastConnectionId" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="Messages" Relationship="Self.FK_Message_User" FromRole="User" ToRole="Message" />
           <NavigationProperty Name="UserConnections" Relationship="Self.FK_UserConnection_User" FromRole="User" ToRole="UserConnection" />
         </EntityType>
@@ -208,7 +212,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityContainer Name="ReactChatConnection" annotation:LazyLoadingEnabled="true">
+        <EntityContainer Name="AzureDBConnection" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="Chatrooms" EntityType="Self.Chatroom" />
           <EntitySet Name="Messages" EntityType="Self.Message" />
           <EntitySet Name="Users" EntityType="Self.User" />
@@ -235,9 +239,9 @@
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-        <EntityContainerMapping StorageEntityContainer="ReactChatModelStoreContainer" CdmEntityContainer="ReactChatConnection">
+        <EntityContainerMapping StorageEntityContainer="ReactChatAzureModelStoreContainer" CdmEntityContainer="AzureDBConnection">
           <EntitySetMapping Name="Chatrooms">
-            <EntityTypeMapping TypeName="ReactChatModel.Chatroom">
+            <EntityTypeMapping TypeName="ReactChatAzureModel.Chatroom">
               <MappingFragment StoreEntitySet="Chatroom">
                 <ScalarProperty Name="ChatroomId" ColumnName="ChatroomId" />
                 <ScalarProperty Name="RoomName" ColumnName="RoomName" />
@@ -247,28 +251,30 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Messages">
-            <EntityTypeMapping TypeName="ReactChatModel.Message">
+            <EntityTypeMapping TypeName="ReactChatAzureModel.Message">
               <MappingFragment StoreEntitySet="Message">
                 <ScalarProperty Name="MessageId" ColumnName="MessageId" />
                 <ScalarProperty Name="AuthorId" ColumnName="AuthorId" />
                 <ScalarProperty Name="ChatroomId" ColumnName="ChatroomId" />
                 <ScalarProperty Name="Text" ColumnName="Text" />
+                <ScalarProperty Name="SendDate" ColumnName="SendDate" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Users">
-            <EntityTypeMapping TypeName="ReactChatModel.User">
+            <EntityTypeMapping TypeName="ReactChatAzureModel.User">
               <MappingFragment StoreEntitySet="User">
                 <ScalarProperty Name="UserId" ColumnName="UserId" />
                 <ScalarProperty Name="UserName" ColumnName="UserName" />
                 <ScalarProperty Name="Password" ColumnName="Password" />
                 <ScalarProperty Name="Email" ColumnName="Email" />
                 <ScalarProperty Name="Salt" ColumnName="Salt" />
+                <ScalarProperty Name="LastConnectionId" ColumnName="LastConnectionId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="UserConnections">
-            <EntityTypeMapping TypeName="ReactChatModel.UserConnection">
+            <EntityTypeMapping TypeName="ReactChatAzureModel.UserConnection">
               <MappingFragment StoreEntitySet="UserConnection">
                 <ScalarProperty Name="UserConnectionId" ColumnName="UserConnectionId" />
                 <ScalarProperty Name="UserId" ColumnName="UserId" />

@@ -18,6 +18,7 @@ namespace reactchatAPI.Models
         public int AuthorId { get; set; }
         public int ChatroomId { get; set; }
         public string Text { get; set; }
+        public System.DateTime SendDate { get; set; }
     
         public virtual Chatroom Chatroom { get; set; }
         public virtual User User { get; set; }

@@ -13,10 +13,10 @@ namespace reactchatAPI.Models
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
     
-    public partial class ReactChatConnection : DbContext
+    public partial class AzureDBConnection : DbContext
     {
-        public ReactChatConnection()
-            : base("name=ReactChatConnection")
+        public AzureDBConnection()
+            : base("name=AzureDBConnection")
         {
         }
     

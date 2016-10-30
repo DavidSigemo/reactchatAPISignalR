@@ -8,7 +8,7 @@ using Microsoft.AspNet.SignalR.Hubs;
 
 namespace reactchatAPI.App_Start
 {
-    [HubName("MessageHub")]
+    [HubName("messageHub")]
     public class MessageHub : Hub
     {
 /// <summary>
@@ -17,7 +17,7 @@ namespace reactchatAPI.App_Start
         /// <param name="chatItem"></param>
         public void SendMessage(string who, string message)
         {
-            IHubContext context = GlobalHost.ConnectionManager.GetHubContext("MessageHub");
+            IHubContext context = GlobalHost.ConnectionManager.GetHubContext("messageHub");
             context.Clients.All.pushNewMessage(who, message);
         }
 
@@ -26,14 +26,21 @@ namespace reactchatAPI.App_Start
         /// </summary>
         public void SendUserList(List<String> userList)
         {
-            IHubContext context = GlobalHost.ConnectionManager.GetHubContext("MessageHub");
+            IHubContext context = GlobalHost.ConnectionManager.GetHubContext("messageHub");
             context.Clients.All.pushUserList(userList);
         }
 
+        [HubMethodName("Test")]
         public void Test(string test)
         {
-            IHubContext context = GlobalHost.ConnectionManager.GetHubContext("MessageHub");
-            context.Clients.All.servertest(test);
+            IHubContext context = GlobalHost.ConnectionManager.GetHubContext("messageHub");
+            context.Clients.All.Test(test);
+        }
+
+        [HubMethodName("TestMetod")]
+        public void Con()
+        {
+            Test("Hej klient");
         }
     }
 }
