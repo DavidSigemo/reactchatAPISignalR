@@ -1,1 +1,0 @@
-﻿ReactDOM.render(<MainChat />, document.getElementById('container'));
