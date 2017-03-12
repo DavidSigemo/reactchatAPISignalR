@@ -12,12 +12,11 @@ namespace reactchatAPI.Models
     using System;
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
-    using System.Data.Entity.SqlServer;
-
+    
     public partial class AzureDBConnection : DbContext
     {
         public AzureDBConnection()
-            : base()
+            : base("name=AzureDBConnection")
         {
         }
     
@@ -31,6 +30,4 @@ namespace reactchatAPI.Models
         public virtual DbSet<User> Users { get; set; }
         public virtual DbSet<UserConnection> UserConnections { get; set; }
     }
-
-  
 }

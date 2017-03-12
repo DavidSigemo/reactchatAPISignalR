@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 using System.Web.Http;
 using System.Web.Http.Description;
 using reactchatAPI.Models;
+using reactchatAPI.ViewModels;
 
 namespace reactchatAPI.ApiControllers
 {
@@ -18,13 +19,15 @@ namespace reactchatAPI.ApiControllers
         private AzureDBConnection db = new AzureDBConnection();
 
         // GET: api/Chatroom
-        public IQueryable<Chatroom> GetChatrooms()
+        public IQueryable<ChatroomViewModel> GetChatrooms()
+
         {
-            return db.Chatrooms;
+            var chatrooms = db.Chatrooms.Select(x => new ChatroomViewModel { Id = x.ChatroomId, RoomName = x.RoomName, Locked = x.Locked, Password = x.Password });
+            return chatrooms;
         }
 
         // GET: api/Chatroom/5
-        [ResponseType(typeof(Chatroom))]
+        [ResponseType(typeof(ChatroomViewModel))]
         public async Task<IHttpActionResult> GetChatroom(int id)
         {
             Chatroom chatroom = await db.Chatrooms.FindAsync(id);
@@ -32,8 +35,8 @@ namespace reactchatAPI.ApiControllers
             {
                 return NotFound();
             }
-
-            return Ok(chatroom);
+            ChatroomViewModel chatroomViewModel = new ChatroomViewModel { Id = chatroom.ChatroomId, RoomName = chatroom.RoomName, Locked = chatroom.Locked, Password = chatroom.Password };
+            return Ok(chatroomViewModel);
         }
 
         // PUT: api/Chatroom/5
