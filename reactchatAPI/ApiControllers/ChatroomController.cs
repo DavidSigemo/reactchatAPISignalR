@@ -11,23 +11,25 @@ using System.Web.Http;
 using System.Web.Http.Description;
 using reactchatAPI.Models;
 using reactchatAPI.ViewModels;
+using System.Web.Http.Cors;
+using Newtonsoft.Json;
 
 namespace reactchatAPI.ApiControllers
 {
+    [EnableCors(origins:"*", headers: "*", methods:"*")]
     public class ChatroomController : ApiController
     {
         private AzureDBConnection db = new AzureDBConnection();
 
         // GET: api/Chatroom
-        public IQueryable<ChatroomViewModel> GetChatrooms()
-
+        public string GetChatrooms()
         {
-            var chatrooms = db.Chatrooms.Select(x => new ChatroomViewModel { Id = x.ChatroomId, RoomName = x.RoomName, Locked = x.Locked, Password = x.Password });
-            return chatrooms;
+            var chatrooms = db.Chatrooms.Select(x => new ChatroomViewModel { Id = x.ChatroomId, RoomName = x.RoomName, Locked = x.Locked, Password = x.Password }).ToList();
+            return JsonConvert.SerializeObject(chatrooms);
         }
 
         // GET: api/Chatroom/5
-        [ResponseType(typeof(ChatroomViewModel))]
+        [ResponseType(typeof(string))]
         public async Task<IHttpActionResult> GetChatroom(int id)
         {
             Chatroom chatroom = await db.Chatrooms.FindAsync(id);
@@ -36,7 +38,7 @@ namespace reactchatAPI.ApiControllers
                 return NotFound();
             }
             ChatroomViewModel chatroomViewModel = new ChatroomViewModel { Id = chatroom.ChatroomId, RoomName = chatroom.RoomName, Locked = chatroom.Locked, Password = chatroom.Password };
-            return Ok(chatroomViewModel);
+            return Ok(JsonConvert.SerializeObject(chatroomViewModel));
         }
 
         // PUT: api/Chatroom/5

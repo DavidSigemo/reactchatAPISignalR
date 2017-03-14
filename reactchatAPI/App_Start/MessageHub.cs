@@ -34,6 +34,8 @@ namespace reactchatAPI.App_Start
         public void Test(string test)
         {
             IHubContext context = GlobalHost.ConnectionManager.GetHubContext("messageHub");
+
+            //This runs the method Test in the React code for all clients
             context.Clients.All.Test(test);
         }
 

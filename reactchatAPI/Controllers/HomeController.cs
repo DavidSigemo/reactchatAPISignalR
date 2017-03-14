@@ -6,6 +6,7 @@ using System.Web.Mvc;
 
 namespace reactchatAPI.Controllers
 {
+    [RoutePrefix("home")]
     public class HomeController : Controller
     {
         // GET: Home

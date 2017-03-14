@@ -18,6 +18,8 @@ namespace reactchatAPI.Models
         public AzureDBConnection()
             : base("name=AzureDBConnection")
         {
+            var connectionstring = System.Environment.GetEnvironmentVariable("SQLAZURECONNSTR_MS_TableConnectionString");
+            this.Database.Connection.ConnectionString = connectionstring;
         }
     
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
