@@ -272,6 +272,7 @@
     <Compile Include="ApiControllers\MessageController.cs" />
     <Compile Include="ApiControllers\UsersController.cs" />
     <Compile Include="App_Start\BundleConfig.cs" />
+    <Compile Include="App_Start\ConnectionMapping.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\MessageHub.cs" />
     <Compile Include="App_Start\MessageManager.cs" />

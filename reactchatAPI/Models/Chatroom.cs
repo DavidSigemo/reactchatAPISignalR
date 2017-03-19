@@ -22,9 +22,10 @@ namespace reactchatAPI.Models
         }
     
         public int ChatroomId { get; set; }
-        public string RoomName { get; set; }
         public bool Locked { get; set; }
         public string Password { get; set; }
+        public string Name { get; set; }
+        public string Description { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Message> Messages { get; set; }

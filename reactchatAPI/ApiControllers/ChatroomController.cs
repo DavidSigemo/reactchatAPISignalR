@@ -24,7 +24,7 @@ namespace reactchatAPI.ApiControllers
         // GET: api/Chatroom
         public string GetChatrooms()
         {
-            var chatrooms = db.Chatrooms.Select(x => new ChatroomViewModel { Id = x.ChatroomId, RoomName = x.RoomName, Locked = x.Locked, Password = x.Password }).ToList();
+            var chatrooms = db.Chatrooms.Select(x => new ChatroomViewModel { Id = x.ChatroomId, Name = x.Name, Description = x.Description, Locked = x.Locked, Password = x.Password }).ToList();
             return JsonConvert.SerializeObject(chatrooms);
         }
 
@@ -37,7 +37,7 @@ namespace reactchatAPI.ApiControllers
             {
                 return NotFound();
             }
-            ChatroomViewModel chatroomViewModel = new ChatroomViewModel { Id = chatroom.ChatroomId, RoomName = chatroom.RoomName, Locked = chatroom.Locked, Password = chatroom.Password };
+            ChatroomViewModel chatroomViewModel = new ChatroomViewModel { Id = chatroom.ChatroomId, Name = chatroom.Name, Description = chatroom.Description, Locked = chatroom.Locked, Password = chatroom.Password };
             return Ok(JsonConvert.SerializeObject(chatroomViewModel));
         }
 
