@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace reactchatAPI.App_Start
 {
-    [Authorize]
+    //[Authorize]
     [HubName("messageHub")]
     public class MessageHub : Hub
     {
